@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="jmedrandas6.Views.vEstudiante"
+             Title="vEstudiante">
+    <VerticalStackLayout
+        Spacing="20"
+        Padding="20"
+        >
+        <Label 
+            Text="Consumo de Ws / Estudiante"
+            FontSize="20"
+            TextColor="Blue"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+       
+        <ListView x:Name="listaEstudiantes">
+            <ListView.Header>
+                <!-- Encabezados de la tabla -->
+                <Grid Padding="10,5" BackgroundColor="LightGray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <!-- Código -->
+                        <ColumnDefinition Width="120" />
+                        <!-- Nombre -->
+                        <ColumnDefinition Width="120" />
+                        <!-- Apellido -->
+                        <ColumnDefinition Width="60" />
+                        <!-- Edad -->
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Código" 
+                   FontAttributes="Bold" 
+                   Grid.Column="0" />
+                    <Label Text="Nombre" 
+                   FontAttributes="Bold" 
+                   Grid.Column="1" />
+                    <Label Text="Apellido" 
+                   FontAttributes="Bold" 
+                   Grid.Column="2" />
+                    <Label Text="Edad" 
+                   FontAttributes="Bold" 
+                   Grid.Column="3" />
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10,5" ColumnSpacing="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="60" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding codigo}" 
+                           Grid.Column="0" />
+                            <Label Text="{Binding nombre}" 
+                           Grid.Column="1" />
+                            <Label Text="{Binding apellido}" 
+                           Grid.Column="2" />
+                            <Label Text="{Binding edad}" 
+                           Grid.Column="3" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </VerticalStackLayout>
+</ContentPage>
