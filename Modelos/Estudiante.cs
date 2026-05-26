@@ -4,7 +4,7 @@ using System.Text;
 
 namespace jmedrandas6.Modelos
 {
-    internal class Estudiante
+    public class Estudiante
     {
         public int codigo { get; set; }
         public string nombre { get; set; }

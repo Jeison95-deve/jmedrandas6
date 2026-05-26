@@ -2,72 +2,118 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="jmedrandas6.Views.vEstudiante"
-             Title="vEstudiante">
-    <VerticalStackLayout
-        Spacing="20"
-        Padding="20"
-        >
-        <Label 
-            Text="Consumo de Ws / Estudiante"
-            FontSize="20"
-            TextColor="Blue"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-       
-        <ListView x:Name="listaEstudiantes">
-            <ListView.Header>
-                <!-- Encabezados de la tabla -->
-                <Grid Padding="10,5" BackgroundColor="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
-                        <!-- Código -->
-                        <ColumnDefinition Width="120" />
-                        <!-- Nombre -->
-                        <ColumnDefinition Width="120" />
-                        <!-- Apellido -->
-                        <ColumnDefinition Width="60" />
-                        <!-- Edad -->
-                    </Grid.ColumnDefinitions>
+             Title="Estudiantes">
 
-                    <Label Text="Código" 
-                   FontAttributes="Bold" 
-                   Grid.Column="0" />
-                    <Label Text="Nombre" 
-                   FontAttributes="Bold" 
-                   Grid.Column="1" />
-                    <Label Text="Apellido" 
-                   FontAttributes="Bold" 
-                   Grid.Column="2" />
-                    <Label Text="Edad" 
-                   FontAttributes="Bold" 
-                   Grid.Column="3" />
-                </Grid>
-            </ListView.Header>
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10,5" ColumnSpacing="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="60" />
-                            </Grid.ColumnDefinitions>
+            <!-- TÍTULO -->
+            <Label 
+                Text="📚 CRUD DE ESTUDIANTES"
+                FontSize="24"
+                TextColor="Blue"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
 
-                            <Label Text="{Binding codigo}" 
-                           Grid.Column="0" />
-                            <Label Text="{Binding nombre}" 
-                           Grid.Column="1" />
-                            <Label Text="{Binding apellido}" 
-                           Grid.Column="2" />
-                            <Label Text="{Binding edad}" 
-                           Grid.Column="3" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <!-- ============================================ -->
+            <!-- SECCIÓN 1: BÚSQUEDA                           -->
+            <!-- ============================================ -->
+            <Border Stroke="Blue" StrokeThickness="2" Padding="10" StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="🔍 BUSCAR ESTUDIANTE" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-    </VerticalStackLayout>
+                    <Entry x:Name="txtBuscar" Placeholder="Buscar por nombre o apellido"/>
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button Text="🔍 BUSCAR" BackgroundColor="Blue" TextColor="White" 
+                                Clicked="OnBuscarClicked"/>
+                        <Button Text="📋 MOSTRAR TODOS" BackgroundColor="Gray" TextColor="White" 
+                                Clicked="OnMostrarTodosClicked"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN 2: AGREGAR ESTUDIANTE                  -->
+            <!-- ============================================ -->
+            <Border Stroke="Green" StrokeThickness="2" Padding="10" StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="📝 AGREGAR ESTUDIANTE" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+                    <Entry x:Name="txtNombre" Placeholder="Nombre" BackgroundColor="White"/>
+                    <Entry x:Name="txtApellido" Placeholder="Apellido" BackgroundColor="White"/>
+                    <Entry x:Name="txtEdad" Placeholder="Edad" Keyboard="Numeric" BackgroundColor="White"/>
+
+                    <Button Text="➕ AGREGAR" BackgroundColor="Green" TextColor="White" 
+                            Clicked="OnAgregarClicked"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN 3: BOTONES DE ACCIÓN                   -->
+            <!-- ============================================ -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="✏️ ACTUALIZAR" BackgroundColor="Orange" TextColor="White" 
+                        Clicked="OnActualizarClicked"/>
+                <Button Text="🗑️ ELIMINAR" BackgroundColor="Red" TextColor="White" 
+                        Clicked="OnEliminarClicked"/>
+                <Button Text="🔄 REFRESCAR" BackgroundColor="Blue" TextColor="White" 
+                        Clicked="OnRefrescarClicked"/>
+            </HorizontalStackLayout>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN 4: ESTUDIANTE SELECCIONADO             -->
+            <!-- ============================================ -->
+            <Border Stroke="Gray" StrokeThickness="1" Padding="10" StrokeShape="RoundRectangle 5"
+                    BackgroundColor="LightYellow">
+                <Label x:Name="lblSeleccionado" Text="👉 Selecciona un estudiante de la lista" 
+                       FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+            </Border>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN 5: LISTA DE ESTUDIANTES                -->
+            <!-- ============================================ -->
+            <ListView x:Name="listaEstudiantes" HeightRequest="400">
+
+                <!-- ENCABEZADO DE LA TABLA -->
+                <ListView.Header>
+                    <Grid Padding="10,5" BackgroundColor="LightGray">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="CÓDIGO" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center"/>
+                        <Label Text="NOMBRE" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center"/>
+                        <Label Text="APELLIDO" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center"/>
+                        <Label Text="EDAD" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="Center"/>
+                    </Grid>
+                </ListView.Header>
+
+                <!-- PLANTILLA DE CADA FILA -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,5" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="60" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding codigo}" Grid.Column="0" HorizontalOptions="Center"/>
+                                <Label Text="{Binding nombre}" Grid.Column="1" HorizontalOptions="Center"/>
+                                <Label Text="{Binding apellido}" Grid.Column="2" HorizontalOptions="Center"/>
+                                <Label Text="{Binding edad}" Grid.Column="3" HorizontalOptions="Center"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
